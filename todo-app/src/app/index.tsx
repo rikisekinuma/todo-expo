@@ -1,11 +1,12 @@
 import * as Device from 'expo-device';
 import { useState } from 'react';
-import { Platform, StyleSheet, View, Text, TextInput, Pressable, FlatList } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { Todo } from '@/types/Todo';
 import Form from '@/components/Form';
 import TodoList from '@/components/TodoList';
-import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useEffect } from 'react';
 
 function getDevMenuHint() {
   if (Platform.OS === 'web') {
@@ -29,9 +30,52 @@ export default function HomeScreen() {
   // 期日順ソートフラグ
   const [sortedByDueDate, setSortedByDueDate] = useState<boolean>(false);
 
-  // useEffect(() => {
-  //   localStorage.setItem('todos', JSON.stringify(todos));
-  // }, [todos]);
+  const STORAGE_KEY = 'todos';
+  type StoredTodo = Omit<Todo, 'dueDate'> & {
+    dueDate: string;
+  }
+
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    async function loadTodos() {
+      try {
+        const savedTodos = await AsyncStorage.getItem(STORAGE_KEY);
+
+        if (savedTodos) {
+          const parsedTodos: StoredTodo[] = JSON.parse(savedTodos);
+          const restoredTodos: Todo[] = parsedTodos.map((todo) => ({
+            ...todo,
+            dueDate: new Date(todo.dueDate),
+          }));
+
+          setTodos(restoredTodos);
+        }
+      } catch (error) {
+        console.error('読み込み失敗:', error);
+      } finally {
+        setIsLoaded(true);
+      }
+    }
+    loadTodos();
+  }, []);
+
+  useEffect(() => {
+    if (!isLoaded) return;
+
+    async function saveTodos() {
+      try {
+        await AsyncStorage.setItem(
+          STORAGE_KEY,
+          JSON.stringify(todos)
+        );
+      } catch (error) {
+        console.error('保存失敗:', error);
+      }
+    }
+
+    saveTodos();
+  }, [todos]);
 
   // 選択されたタスクをリストから削除する関数
   function deleteTodos(){
