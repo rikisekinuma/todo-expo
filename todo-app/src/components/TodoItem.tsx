@@ -28,52 +28,180 @@ export default function ({
 
     return(
         <>
-            <View>
+            <View
+                style={styles.row}
+            >
                 <Checkbox
                     value={todo.completed}
                     onValueChange={(checked) => checkTodo(todo.id, checked)}
                 ></Checkbox>
+                <TextInput 
+                    value={editingText}
+                    onChangeText={(text) => setEditingText(text)}
+                    onBlur={() => update(todo.id, editingText, editingDueDate)}
+                    style={styles.input}
+                ></TextInput>
             </View>
-            <TextInput 
-                value={editingText}
-                onChangeText={(text) => setEditingText(text)}
-                onBlur={() => update(todo.id, editingText, editingDueDate)}
-            ></TextInput>
-            <Pressable 
-                style={styles.dateInput}
-                onPress={() => setShowDatePicker(true)}
+            <View
+                style={styles.deleteButtonContainer}
             >
-                <Text>期日: {formatDate(editingDueDate)}</Text>
-            </Pressable>
-            {showDatePicker && (
-                <DateTimePicker
-                    value={editingDueDate}
-                    onChange={(_, selectedDate) => {
-                        if (!selectedDate) {
-                            return;
-                        }
-                        setEditingDueDate(selectedDate);
-                        // この時点ではeditingDueDateはまだ更新されていないため、
-                        // selectedDateを直接使用してupdate関数を呼び出す
-                        update(todo.id, editingText, selectedDate);
-                    }}
-                    mode="date"
-                />
-            )}
-            <Button
-                title="削除"
-                onPress={() => deleteTodo(todo.id)}
-            ></Button>
+
+                <View
+                    style={styles.dateRow}
+                >
+                    <Text
+                        style={{color : "#FFFFFF"}}
+                    >期日：</Text>
+                    <DateTimePicker
+                        value={editingDueDate}
+                        mode="date"
+                        is24Hour={true}
+                        locale="ja-JP"
+                        onValueChange={(_, selectedDate) => {
+
+                            if (!selectedDate) return;
+                            setEditingDueDate(selectedDate);
+                            update(todo.id, editingText, selectedDate);
+                        }}
+                    />
+                </View>
+                <Pressable
+                    style={styles.deleteButton}
+                    onPress={() => deleteTodo(todo.id)}
+                >
+                    <Text
+                        style={styles.primaryButtonText}
+                    >削除</Text>
+                </Pressable>
+            </View>
         </>
     )
 }
 
 const styles = StyleSheet.create({
-  dateInput: {
+  // 画面全体
+    container: {
+    
+    },
+
+    // ヘッダー/フォーム部分
+    header: {
+    backgroundColor: "#FFFFFF",
+    borderRadius: 16,
+    padding: 16,
+    marginBottom: 16,
+    },
+
+    // 入力欄
+    input: {
+    backgroundColor: "#FFFFFF",
     borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 6,
-    paddingVertical: 8,
+    borderColor: "#D1D1D6",
+    borderRadius: 10,
     paddingHorizontal: 12,
-  },
+    paddingVertical: 10,
+    fontSize: 16,
+    width: 200,
+    },
+
+    // 日付入力っぽいPressable
+    dateInput: {
+    backgroundColor: "#FFFFFF",
+    borderWidth: 1,
+    borderColor: "#D1D1D6",
+    borderRadius: 10,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    width: 100,
+    },
+
+    // TodoItem
+    todoItem: {
+    backgroundColor: "#FFFFFF",
+    borderRadius: 14,
+    padding: 14,
+    marginBottom: 10,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+    },
+
+    // Todo本文
+    todoTextInput: {
+    flex: 1,
+    fontSize: 16,
+    },
+
+    // 通常ボタン
+    primaryButton: {
+    backgroundColor: "#007AFF",
+    borderRadius: 10,
+    height: 30,
+    width: 90,
+    alignItems: "center",
+    paddingVertical: 3,
+    justifyContent: "center",
+    marginTop: 5,
+    marginBottom: 5,
+    },
+
+    primaryButtonText: {
+    color: "#FFFFFF",
+    fontSize: 16,
+    fontWeight: "600",
+    justifyContent: "center",
+    alignItems: "center",
+    },
+
+    // 小さい操作ボタン
+    textButton: {
+    paddingVertical: 6,
+    paddingHorizontal: 8,
+    },
+
+    textButtonText: {
+    color: "#007AFF",
+    fontSize: 14,
+    },
+
+    deleteText: {
+    color: "#FF3B30",
+    fontSize: 14,
+    },
+
+    deleteButtonContainer: {
+        flexDirection: "row",
+        marginTop: 10,
+        marginBottom: 10,
+        alignItems: "center",
+    },
+
+    deleteButton: {
+        backgroundColor: "#007AFF",
+        borderRadius: 10,
+        height: 30,
+        width: 120,
+        alignItems: "center",
+        justifyContent: "center",
+        marginLeft: 70,
+    },
+
+    dateTimePicker: {
+        backgroundColor: "#FFFFFF",
+    },
+
+    row: {
+    borderRadius: 16,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+    marginTop: 10,
+    marginBottom: 10,
+    },
+
+    dateRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 1,
+    },
 });
