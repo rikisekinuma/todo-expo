@@ -1,9 +1,6 @@
-import * as Device from 'expo-device';
 import { useState } from 'react';
-import { Platform, StyleSheet, View, Text, TextInput, Pressable, Button } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { StyleSheet, View, Text, TextInput, Pressable} from 'react-native';
 import { Todo } from '@/types/Todo';
-import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Checkbox from 'expo-checkbox';
 
@@ -12,7 +9,6 @@ type Props = {
     checkTodo: (id: number, checked: boolean) => void;
     deleteTodo:  (id: number) => void;
     update: (id: number, text: string, dueDate: Date) => void;
-    formatDate: (date: Date) => string;
 }
 
 export default function ({
@@ -20,11 +16,9 @@ export default function ({
     checkTodo,
     deleteTodo,
     update,
-    formatDate
 }:Props){
     const [editingText, setEditingText] = useState(todo.text);
     const [editingDueDate, setEditingDueDate] = useState(todo.dueDate);
-    const [showDatePicker, setShowDatePicker] = useState(false);
 
     return(
         <>

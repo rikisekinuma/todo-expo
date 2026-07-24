@@ -1,24 +1,12 @@
-import * as Device from 'expo-device';
-import { Platform, StyleSheet, FlatList } from 'react-native';
+import { StyleSheet, FlatList } from 'react-native';
 import { Todo } from '@/types/Todo';
 import TodoItem from '@/components/TodoItem'
 
-function getDevMenuHint() {
-  if (Platform.OS === 'web') {
-    return ;
-  }
-  if (Device.isDevice) {
-    return ;
-  }
-  const shortcut = Platform.OS === 'android' ? 'cmd+m (or ctrl+m)' : 'cmd+d';
-  return ;
-}
 type Props = {
     todos: Todo[];
     checkTodo: (id: number, checked: boolean) => void;
     deleteTodo:  (id: number) => void;
     update: (id: number, text: string, dueDate: Date) => void;
-    formatDate: (date: Date) => string;
 }
 
 export default function TodoList({ 
@@ -26,7 +14,6 @@ export default function TodoList({
     checkTodo,
     deleteTodo,
     update,
-    formatDate
  }:Props ) {
     return (
         <FlatList<Todo>
@@ -39,7 +26,6 @@ export default function TodoList({
                     checkTodo={checkTodo}
                     deleteTodo={deleteTodo}
                     update={update}
-                    formatDate={formatDate}
                 />
             )}
         />

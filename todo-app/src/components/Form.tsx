@@ -1,13 +1,7 @@
-import React, {useState} from 'react';
-import {View, Text, TextInput, Button, StyleSheet, GestureResponderEvent, Pressable} from 'react-native';
+import React from 'react';
+import {View, Text, TextInput, StyleSheet, Pressable} from 'react-native';
 import type { Todo } from '@/types/Todo';
-import { DateTimePickerEvent } from '@react-native-community/datetimepicker';
 import DateTimePicker from '@react-native-community/datetimepicker';
-
-type Props = {
-  placeholder?: string;
-  onSubmit: (text: string) => void;
-};
 
 export default function Form({
     inputTodo,
@@ -18,7 +12,6 @@ export default function Form({
     isCheckedAll,
     sortByCreated,
     sortByDueDate,
-    formatDate
 }:{
     inputTodo: Todo; 
     setInputTodo: React.Dispatch<React.SetStateAction<Todo>>; 
@@ -28,7 +21,6 @@ export default function Form({
     isCheckedAll: boolean;
     sortByCreated: () => void;
     sortByDueDate: () => void;
-    formatDate: (date: Date) => string;
 }) {
 
     return (
@@ -226,22 +218,6 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     justifyContent: "center",
     alignItems: "center",
-    },
-
-    // 小さい操作ボタン
-    textButton: {
-    paddingVertical: 6,
-    paddingHorizontal: 8,
-    },
-
-    textButtonText: {
-    color: "#007AFF",
-    fontSize: 14,
-    },
-
-    deleteText: {
-    color: "#FF3B30",
-    fontSize: 14,
     },
 
     addButton: {
