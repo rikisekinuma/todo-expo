@@ -1,56 +1,70 @@
-# Welcome to your Expo app 👋
+# Todo App (Expo) 📝
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+このプロジェクトは、React Native と Expo を使って作成したシンプルな Todo アプリです。  
+学習目的で、状態管理・コンポーネント分割・日付入力・ローカル保存の流れを実際に体験できるように構成しています。
 
-## Get started
+## アプリ概要
 
-1. Install dependencies
+このアプリは、日々のタスクを入力・編集・完了管理できる Todo アプリです。  
+Expo で動作するモバイルアプリとして、基本的な Todo 操作を体験しやすい形で実装しています。
 
-   ```bash
-   npm install
-   ```
+## 使用技術
 
-2. Start the app
+| 項目 | 内容 |
+| --- | --- |
+| フレームワーク | React Native |
+| 開発基盤 | Expo |
+| 言語 | TypeScript |
+| ストレージ | AsyncStorage |
+| UI | expo-checkbox, react-native-community/datetimepicker |
+| ルーティング | expo-router |
 
-   ```bash
-   npx expo start
-   ```
+## 実装機能
 
-In the output, you'll find options to open the app in a
+- Todo の追加
+- Todo の編集
+- Todo の削除
+- チェックボックスによる完了状態の切り替え
+- 全選択 / 全選択解除
+- 選択済み Todo の一括削除
+- 作成日順での並び替え
+- 期日順での並び替え
+- 期日の設定
+- デバイスへの保存（AsyncStorage）
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## ディレクトリ構成
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+```text
+src/
+  app/          # 画面本体
+  components/   # フォーム・Todo一覧・Todoアイテム
+  constants/    # テーマ関連の定数
+  types/        # 型定義
+assets/         # アイコンや画像素材
+scripts/        # 補助スクリプト
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## 起動方法
 
-### Other setup steps
+```bash
+npm install
+npx expo start
+```
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+起動後、Expo の表示に従って iOS / Android / Web で確認できます。
 
-## Learn more
+## スクリーンショット
 
-To learn more about developing your project with Expo, look at the following resources:
+![ホーム画面](assets/screenshots/home.png)
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## 今後の改善案
 
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+- 優先度の設定
+- カテゴリやタグによる分類
+- 完了済みタスクの自動整理
+- 通知機能
+- 検索・フィルタ機能
+- ダークモード対応
+- 並び替えの保持
+- ドラッグ＆ドロップによる並び替え
+- クラウド同期機能
